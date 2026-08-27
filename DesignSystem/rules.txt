@@ -1,0 +1,85 @@
+PROTOTYPE DEVELOPMENT RULES
+=============================================================
+
+WHAT YOU ARE BUILDING
+---------------------
+- Build a working Proof of Concept (POC), not a static design.
+- A reviewer must be able to complete the full citizen journey — from entry to resolved outcome — without any explanation from you.
+- Every screen must function. Every interaction must respond.
+
+
+DATA & BACKEND
+--------------
+- No real database is needed.
+- Use mock or synthetic data wherever real personal information, payments, OTPs, or government systems would normally be involved.
+- Mock data must be clearly labelled in the interface (e.g. "This is a demo. Real payments are not processed.").
+- Build mock backend behaviour — simulated OTPs, fake verification success, synthetic booking states - so the journey works end to end.
+- Never use real Aadhaar numbers, PAN details, passwords, OTPs, payment details, health information, or any other sensitive personal data.
+- Do not connect to any live government system.
+- Do not use undocumented private APIs.
+- Do not reverse-engineer private systems.
+- Do not scrape personal or restricted information.
+- For the session holding or storing information use browser cache (localStorage or sessionStorage).
+
+
+ACCESS
+----------------
+- If the build requires a login, provide mock consumer credentials — never a real password.
+
+
+SCOPE & CITIZEN JOURNEY
+------------------------
+- Build for the citizen/consumer side only. Do not build admin panels, officer dashboards, or backend management interfaces — these will not be evaluated.
+- Show the complete citizen journey: entry → action → pending/loading state → success/failure → recovery path.
+- Design for real Indian users: mobile devices, slower connections, and limited digital literacy must be accounted for.
+
+
+WHAT MUST WORK (NON-NEGOTIABLE SCREENS)
+----------------------------------------
+Build and connect at minimum:
+  1. Entry / onboarding screen
+  2. Highest-stakes action screen (the moment the current experience fails hardest)
+  3. Pending / loading state (what the citizen sees while waiting)
+  4. Success state (clear, trustworthy confirmation)
+  5. Error state (specific next step — never a dead end)
+  6. Recovery / fallback screen (what happens if the primary path fails)
+
+
+UX PRINCIPLES
+-------------
+- Every error message must name: what failed, who owns the fix, what evidence resolves it, and what the citizen does next. "KYC mismatch" with no further detail is not acceptable.
+- Sessions must not silently expire and discard user progress. Build persistent state or warn the user before expiry.
+- Identity matching must not rely on exact string equality. Account for Indian naming conventions — regional orders, transliteration variants, marriage-name changes.
+- If an upstream action succeeds (e.g. payment authorised), the downstream state must reflect it. No blank screens after a confirmed action.
+- Clearly distinguish between "resolved" and "closed without resolution."
+- Avoid CAPTCHA at every step. If needed simulate that work too.
+- File upload constraints (size, format) must be shown before the user attempts the upload — not discovered through rejection.
+- Any time-critical flow (e.g. Tatkal booking, GST deadline filing) must not fail silently. Status must be unambiguous: confirmed, in-progress, or failed with next step.
+
+
+THINGS TO EXPLICITLY NOT DO
+----------------------------
+- Do not present the prototype as an official government product.
+- Do not use government logos in any way that implies official approval or partnership.
+- Do not attempt to access, test, or interfere with a live government system.
+- Do not build only the visual layer. Address the underlying failure: state management, data provenance, cross-system commitment, and error recovery.
+- Do not build something visually impressive but functionally useless for the citizen. A clean, working reconciliation screen beats a 3D data visualisation that helps no one.
+- Do not use code, assets, or data you do not have permission to use.
+- Do not submit an old project with only cosmetic changes.
+
+
+HONESTY & DISCLOSURE
+---------------------
+- Clearly disclose what works in the prototype today and what is still mocked.
+- Clearly disclose dependencies — what a real-world deployment would require that the POC does not yet have.
+- Label the build as an independent hackathon prototype, not a government product.
+- Judges reward honesty. A prototype that knows its limits is stronger than one that overstates them.
+
+
+THE QUESTION TO KEEP ASKING
+----------------------------
+Not: "Does this look impressive?"
+But: "Does this actually make a frustrated citizen's life easier?"
+
+Build the thing that would have helped the real person in your story.
+=============================================================

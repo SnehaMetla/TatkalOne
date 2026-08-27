@@ -1,0 +1,229 @@
+# Tatkal Booking Clarity Design System
+
+## Implemented prototype system (27 Aug 2026)
+
+The independent hackathon prototype uses a trust-focused navy, orange and white transactional interface, without official logos or claims. Body copy is 16px minimum, controls are at least 44px high, and every semantic state has both a label and a recognised marker: ✓ confirmed, R RAC, W waiting list, × failed, and ○ pending.
+
+- **Tokens:** `--navy #163b8c`, `--orange #fb792b`, `--green #087f3e`, `--yellow #b66b00`, `--wait #bd5b16`, `--red #ba1a1a`; 4px spacing increments; 4–8px radii.
+- **Layout:** a centred 1200px maximum content area; two columns on desktop, one column on tablet/mobile. The four-stage timeline switches from horizontal to vertical on small screens.
+- **Core components:** persistent dismissible demo banner, top navigation, journey context card, scenario selector, mock payment options, four-stage timeline, action card, money-update card, error/recovery guidance and non-blocking toast.
+- **Behaviour:** selection and current flow state persist in localStorage. All payment, identity and booking information is visibly synthetic and all outcomes are supplied by local mock data.
+
+## Prototype implementation note (26 Aug 2026)
+
+The independent Tatkal-status prototype applies the existing IRCTC navy/orange/white language to a clarity-first transactional journey. It uses white bordered cards, 4–8px radii, a 4px spacing scale, system font fallback for offline resilience, and orange primary actions. Booking states always pair labels and symbols with semantic colour: green confirmed, yellow RAC, orange waiting list, and red failure/pending. The four-stage status timeline is the core reusable component and consistently separates payment, booking, ticket and seat allotment. A high-contrast demo disclosure is persistent at the app top.
+
+Extracted from the live site (`https://www.irctc.co.in/nget/train-search`) via computed-style inspection, cross-checked against the homepage reference screenshot. Built on **Angular + PrimeNG** (icon classes `primeicons`, `.p-inputtext` present) with **FontAwesome** and **Bootstrap Glyphicons** for legacy icon sets.
+
+---
+
+## 1. Color Palette
+
+### Brand / Primary
+| Token | Hex | RGB | Usage |
+|---|---|---|---|
+| `--irctc-navy` | `#2E3192` | 46, 49, 146 | Logo wordmark "IRCTC", primary brand text |
+| `--irctc-blue-deep` | `#213D77` | 33, 61, 119 | Booking widget header/tabs ("PNR STATUS", "CHARTS/VACANCY") |
+| `--irctc-blue-header` | `#163B8C` | 22, 59, 140 | Nav bar gradient, secondary buttons ("Explore beta now") |
+| `--irctc-blue-navy-alt` | `#082B71` | 8, 43, 113 | Form accents, checkbox borders |
+| `--irctc-purple-footer` | `#2C215D` | 44, 33, 93 | Footer background |
+
+### Accent / CTA
+| Token | Hex | RGB | Usage |
+|---|---|---|---|
+| `--irctc-orange` | `#FB792B` | 251, 121, 43 | Primary CTA ("Search Trains"), language toggle pills |
+| `--irctc-red` | `#E00000` | 224, 0, 0 | Alerts, "LOGIN/REGISTER" bar accents |
+| `--irctc-red-bright` | `#ED193B` | 237, 25, 59 | Error/critical states |
+| `--irctc-yellow` | `#F7BB19` | 247, 187, 25 | Warnings, highlight badges |
+| `--irctc-green` | `#008000` | 0, 128, 0 | Success / availability indicators |
+
+### Supporting Blues (links, icons, illustrations)
+| Token | Hex |
+|---|---|
+| `--blue-1` | `#478BE3` |
+| `--blue-2` | `#1D63D8` |
+| `--blue-3` | `#007AD9` |
+| `--blue-4` | `#1066B0` |
+| `--blue-5` | `#0270AD` |
+| `--blue-6` | `#29A2E0` |
+| `--blue-7` | `#4C9BE5` |
+
+### Neutrals
+| Token | Hex | Usage |
+|---|---|---|
+| `--text-primary` | `#333333` | Body copy, headings |
+| `--text-secondary` | `#444444` | Secondary text, close icons |
+| `--text-muted` | `#535D66` | Captions |
+| `--text-disabled` | `#848484` | Placeholder / disabled |
+| `--surface-white` | `#FFFFFF` | Cards, inputs, page background |
+| `--surface-subtle` | `#F8F9FA` | Section backgrounds |
+| `--surface-grey` | `#F5F5F5` / `#F7F7F7` | Alternate section backgrounds |
+| `--border-grey` | `#EAEAEA` | Input borders, dividers |
+| `--surface-tint-blue` | `#EEF5FF` / `#F0F7FA` | Info banners (e.g. "Explore beta" strip) |
+
+---
+
+## 2. Typography
+
+**Primary typeface:** `Quicksand` (loaded as `"Body, Quicksand, sans-serif"`)
+**Fallback stack:** `"Open Sans", "Helvetica Neue", sans-serif` and `Arial, sans-serif`
+**Secondary/legacy stack:** `Montserrat, Verdana`, `"Segoe UI", Arial, sans-serif` (used in older widget fragments)
+**Icon fonts:** `FontAwesome`, `Glyphicons Halflings`, `primeicons`
+
+Base body size: **14px**, color `#000000`/`#333333`.
+
+| Level | Size | Weight | Line-height | Notes |
+|---|---|---|---|---|
+| H1 | 24px | 700 | 26.4px (1.1) | Section titles |
+| H2 | 34px | 600 | 37.4px (1.1) | Hero / large display headings |
+| H3 | 24px | 700 | 26.4px (1.1) | Card / block titles |
+| Body | 14px | 400 | ~1.4 | Default paragraph |
+| Small / label | 12–13px | 400–600 | — | Form labels, nav links |
+| Button | 14px | 600–700 | — | All CTAs |
+
+Observed font-size scale in the wild: `10px, 10.5px, 12px, 13px, 13.5px, 14px, 15px, 16px, 17.5px, 18px, 20px, 21px, 24px, 25px, 30px, 32px, 34px, 50px` — effectively a fluid/non-strict scale, but **12 / 14 / 16 / 20 / 24 / 34px** are the workhorse sizes.
+
+---
+
+## 3. Spacing
+
+No strict 8pt grid — values cluster around a **loose 4px-ish rhythm** with hero-level jumps for hero/section spacing:
+
+```
+2px  3px  4px  5px  6px  7px  8px  10px 11px 12px
+14px 15px 16px 20px 25px 30px 32px 35px 40px
+55px 70px 76px 110px 180px
+```
+
+Recommended token scale to standardize on:
+```
+--space-1: 4px
+--space-2: 8px
+--space-3: 12px
+--space-4: 16px
+--space-5: 20px
+--space-6: 24px
+--space-7: 32px
+--space-8: 40px
+--space-9: 70px
+--space-10: 110px
+```
+
+---
+
+## 4. Border Radius
+
+| Token | Value | Usage |
+|---|---|---|
+| `--radius-xs` | 1px | Hairline elements |
+| `--radius-sm` | 3px | Text inputs, tab corners |
+| `--radius-md` | 4px | Secondary buttons, dropdown corners |
+| `--radius-lg` | 6px | Primary buttons (orange CTA) |
+| `--radius-xl` | 8px | Cards |
+| `--radius-2xl` | 16px | Larger panels |
+| `--radius-3xl` | 24px | Feature panels / hero cutouts |
+| `--radius-pill` | 29px | Pill-shaped tags/toggles |
+| `--radius-full` | 50% | Avatar / icon circles |
+
+Composite corner radii also appear (e.g. `4px 4px 0px 0px` for tab headers, `23px 23px 0px 0px` for rounded-top panels, `0px 3px 3px 0px` for split-button edges).
+
+---
+
+## 5. Components
+
+### Buttons
+
+**Primary (Orange CTA)** — e.g. "Search Trains"
+```
+background: #FB792B
+color: #FFFFFF
+border-radius: 6px
+padding: 8px 14px
+font-size: 14px
+font-weight: 700
+border: none
+```
+
+**Secondary (Deep Blue)** — e.g. "Explore beta now"
+```
+background: #163B8C
+color: #FFFFFF
+border-radius: 4px
+padding: 10px 18px
+font-size: 14px
+font-weight: 600
+border: none
+```
+
+**Language toggle pill** — e.g. "हिंदी" / "English"
+```
+background: #FB792B
+color: #FFFFFF
+border: 1px solid #FB792B
+border-radius: 6px
+padding: 6px 12px
+font-weight: 400
+```
+
+### Form Inputs (text fields, e.g. "From"/"To" station pickers)
+```
+background: #FFFFFF
+border-radius: 3px
+padding: 8px 8px 8px 32px   /* left padding reserves space for a leading icon */
+font-size: 16px
+```
+Checkboxes (e.g. "Person With Disability Concession") are borderless, tinted with `#082B71` accent.
+
+### Booking Widget (hero card)
+- Floating white card overlapping the hero banner image, `border-radius` on the card ~8px, subtle drop shadow.
+- Internal tab bar ("PNR STATUS" / "CHARTS/VACANCY") uses deep blue `#213D77` as the active-tab indicator/background, white icon+text.
+- Fields: From / To (swap icon between them), Date picker, Class dropdown, Quota dropdown, two checkboxes row.
+- CTA button (orange, full-width-ish) anchors the bottom of the card.
+
+### Navigation / Header
+- Slim **utility bar** (white bg): live clock, accessibility text-size controls (A⁻ / A / A⁺), language switcher, "हिंदी" link — all small caps ~12px.
+- **Primary nav** (dark blue gradient `#163B8C`→`#213D77`): white uppercase-style menu items (Home, Trains, Meals, Loyalty, E-Wallet, Alerts, Other Services, Contact Us) at 13–14px weight 600, with "LOGIN/REGISTER" and "TRAINS" items visually emphasized (red/bold accents).
+- Logo lockup: circular railway emblem (left) + wordmark "IRCTC" in navy `#2E3192` (right), plus a right-aligned circular monogram badge.
+
+### Info / Promo Banner
+Light blue tint background (`#EEF5FF`) full-width strip beneath the header, dark navy text, blue pill CTA button ("Explore beta now"), dismiss "×" icon at 24px `#444444`.
+
+### Cards (service tiles, holiday packages)
+- **Icon tiles** ("FLIGHTS", "HOTELS", "RAIL DRISHTI", etc.): circular outlined icon (grey stroke) above a bold uppercase label, arranged in a responsive grid, no visible card border/shadow — pure icon + label pattern.
+- **Content cards** (Holidays section: "Maharajas' Express", "International Packages", etc.): image (top, full-bleed, ~4:3), bold title (H4-ish, ~16–18px/700), 3–4 line muted description (`#535D66`, 13–14px), "Read More →" link in brand blue, laid out in a 3-column responsive grid on white background.
+
+### Footer
+```
+background: #2C215D
+color: #FFFFFF
+```
+- Top row: circular social icons in brand colors (Facebook, WhatsApp, YouTube, Instagram, LinkedIn, Telegram, Pinterest, Tumblr, Snapchat, Twitter/X) on a magenta/purple gradient strip.
+- Main footer: 5-column link list, each column headed by a bold white label with chevron-expandable sub-items (mobile accordion pattern), ~13px link text.
+- Bottom bar: payment/security badges (VeriSign, MasterCard SecureCode, SafeKey, Verified by Visa, RuPay, CRIS) + copyright line, centered, small grey text.
+
+---
+
+## 6. Layout & Grid
+
+- Max content width: full-bleed sections with an inner constrained container (~1200–1280px) for text/card grids.
+- Hero: full-width background image/banner with an overlapping floating booking card (asymmetric two-column: ~35% widget / 65% imagery on desktop).
+- Service-tile grid: 5 columns desktop → collapses to 3–4 on tablet → 2 on mobile.
+- Content card grid: 3 columns desktop → 1 column mobile.
+- Responsive breakpoint hint from meta viewport: `width=device-width, initial-scale=1` (standard mobile-first responsive design; no fixed-width legacy layout).
+
+---
+
+## 7. Iconography
+
+- **FontAwesome** — general UI icons (search, location, close, social).
+- **Glyphicons Halflings** — legacy Bootstrap-era icons (calendar, swap arrows).
+- **primeicons** — PrimeNG component icons (dropdowns, form controls), confirming the app is built on **Angular + PrimeNG**.
+- Style: mostly line/stroke icons inside thin circular outlines (service tiles) or solid glyphs inline with text (nav, forms).
+
+---
+
+## 8. Voice / Visual Tone
+
+- Government/PSU-grade trust signals: national emblem, tricolor-adjacent navy/orange/white palette, security certification badges in the footer.
+- Dense, utility-first information architecture (many nav items, small type, high link density) typical of transactional government portals — prioritizes function and coverage over whitespace.
+- Photography: high-saturation train/travel imagery (Vande Bharat exterior shots, scenic holiday destinations) used as emotional/aspirational accents against an otherwise information-dense, low-ornamentation UI.

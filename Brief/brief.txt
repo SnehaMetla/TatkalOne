@@ -1,0 +1,280 @@
+IRCTC TATKAL BOOKING — UX PROBLEM & PROPOSED SOLUTION
+=========================================================
+
+PROBLEM STATEMENT
+-----------------
+IRCTC Tatkal ticket booking users feel lost and confused during the payment
+process, especially when payment is deducted without ticket issuance or clear
+refund timelines. This results in financial anxiety, wasted time, loss of trust,
+unclear system feedback, and frustration caused by performance instability.
+
+PROBLEM CONTEXT
+---------------
+Tatkal booking is a time-sensitive experience where users need to complete the
+booking quickly. During the payment stage, uncertainty becomes a major issue
+when the system does not clearly communicate whether the payment was
+successful, whether the ticket has been issued, or what the user should do
+next.
+
+When money is deducted but a ticket is not issued, users may not know whether
+to wait, retry the payment, or start the booking process again. The lack of
+clear refund information adds further uncertainty and reduces confidence in
+the system.
+
+KEY USER PAIN POINTS
+--------------------
+- Payment deducted but ticket not issued
+- Unclear payment success, failure, or pending status
+- Unclear refund status and refund timelines
+- Users do not know whether to wait or retry
+- Poor or delayed system feedback
+- Performance instability during the booking process
+- Wasted time when users have to repeat steps
+- Financial anxiety when money has been deducted
+- Reduced trust in the booking system
+
+USER IMPACT
+-----------
+The problem affects users beyond the payment screen. Unclear feedback can make
+users repeatedly check their booking or bank account, retry transactions, or
+restart the booking process. This increases stress and wastes valuable time
+during the limited Tatkal booking window.
+
+CORE INSIGHT
+------------
+The main issue is uncertainty.
+
+Users need to know what is happening with their money and ticket at every
+critical point in the payment journey. When the system does not provide clear
+and timely feedback, users lose their sense of control and confidence.
+
+DESIGN OPPORTUNITY
+------------------
+How might we make the IRCTC Tatkal payment and booking experience clearer and
+more reliable, so users always understand their payment status, ticket status,
+and refund timeline?
+
+GOAL
+----
+Create a payment and booking experience that gives Tatkal users clarity,
+control, and confidence, particularly when a transaction does not immediately
+result in ticket confirmation.
+
+
+PROPOSED SOLUTION
+=================
+
+To address this uncertainty, we introduced a visual booking status timeline at
+the top of the screen.
+
+The timeline brings the four most important stages of the booking journey
+together in one place:
+
+Payment → Booking Status → Ticket Status → Seat Allotment
+
+Instead of making users interpret separate messages or guess what happened,
+the timeline gives them a clear visual representation of where their booking
+currently stands.
+
+The timeline changes according to the user's booking situation.
+
+
+FOUR-STAGE STATUS TIMELINE
+--------------------------
+
+1. PAYMENT
+Shows whether the payment was:
+- Payment Successful
+- Payment Unsuccessful
+- Payment Not Received
+
+2. BOOKING STATUS
+Shows whether the booking was successfully processed:
+- Booking Successful
+- Booking Unsuccessful
+
+3. TICKET STATUS
+Shows the current ticket status:
+- Confirmed
+- Waiting List
+- Pending
+
+4. SEAT ALLOTMENT
+Shows the final seat outcome:
+- Confirmed → Seat number
+- RAC → RAC number
+- Waiting List → Waiting-list number
+- Failed / Pending → Corresponding status
+
+This separation helps users understand that payment status, booking status,
+ticket status, and seat status are not necessarily the same thing.
+
+
+STATUS COLOUR SYSTEM
+--------------------
+
+GREEN — SUCCESSFUL / CONFIRMED
+Used for:
+- Payment successful
+- Booking successful
+- Ticket confirmed
+- Confirmed seat allotted
+
+YELLOW — RAC
+Used when:
+- RAC seat is allotted
+
+ORANGE — WAITING LIST
+Used when:
+- Ticket is in the waiting-list state
+
+RED — FAILED / PENDING
+Used for:
+- Payment unsuccessful
+- Booking unsuccessful
+- Ticket pending
+- Seat allotment pending
+- Seat allotment failed
+
+A tick mark (✓) or cross mark (×) is placed inside the coloured timeline
+circles to provide an additional visual cue.
+
+This allows users to understand the status through both colour and icon,
+rather than relying only on text.
+
+
+SIX MAIN BOOKING SCENARIOS
+==========================
+
+SCENARIO 01 — FULLY CONFIRMED
+Payment: Successful ✓
+Booking: Successful ✓
+Ticket: Confirmed
+Seat: Confirmed seat allotted
+
+The timeline shows a successful journey from payment to seat allotment.
+
+
+SCENARIO 02 — RAC SEAT
+Payment: Successful ✓
+Booking: Successful ✓
+Ticket: Confirmed
+Seat: RAC seat allotted
+
+The user can immediately understand that the ticket is confirmed but the seat
+is RAC.
+
+
+SCENARIO 03 — WAITING LIST + CONFIRMED SEAT
+Payment: Successful ✓
+Booking: Successful ✓
+Ticket: Waiting List
+Seat: Confirmed seat allotted
+
+The timeline communicates the waiting-list ticket status while separately
+showing the seat information.
+
+
+SCENARIO 04 — WAITING LIST + RAC
+Payment: Successful ✓
+Booking: Successful ✓
+Ticket: Waiting List
+Seat: RAC seat allotted
+
+The user can see both the waiting-list status and RAC information clearly.
+
+
+SCENARIO 05 — WAITING LIST + SEAT ALLOTMENT FAILED
+Payment: Successful ✓
+Booking: Successful ✓
+Ticket: Waiting List
+Seat: Seat allotment failed
+
+The timeline makes it clear that the payment and booking were successful, but
+the issue occurred during seat allotment.
+
+
+SCENARIO 06 — PAYMENT UNSUCCESSFUL
+Payment: Unsuccessful ×
+Booking: Unsuccessful ×
+Ticket: Pending
+Seat: Pending
+
+The timeline clearly shows that the issue occurred at the payment/booking
+stage while the later stages remain pending.
+
+
+SUPPORTING BOOKING INFORMATION
+------------------------------
+
+Below the timeline, we provide a simple information card containing the
+essential booking details:
+
+- Train name / train details
+- From → To station
+- Passenger name / account-holder name
+
+This gives users immediate context about which journey and passenger the status
+belongs to.
+
+
+DETAILED STATUS INFORMATION
+---------------------------
+
+The timeline provides the quick overview, while the section below provides
+the exact status.
+
+PAYMENT STATUS
+Payment Successful / Payment Unsuccessful / Payment Not Received
+
+BOOKING STATUS
+Booking Successful / Booking Unsuccessful
+
+TICKET STATUS
+Confirmed / Waiting List / Pending
+
+SEAT ALLOTMENT
+- Confirmed → Seat number
+- RAC → RAC number
+- Waiting List → Waiting-list number
+- Failed / Pending → Corresponding status
+
+
+HOW THE SOLUTION ADDRESSES THE PROBLEM
+--------------------------------------
+
+The core problem is that users are uncertain about what happened after they
+attempt to make a Tatkal booking.
+
+Our solution answers four critical questions in a clear sequence:
+
+Did my payment go through?
+↓
+Was my booking processed?
+↓
+Is my ticket confirmed or waitlisted?
+↓
+What seat/status did I receive?
+
+The user no longer needs to interpret multiple messages or repeatedly check
+whether the booking was successful.
+
+The four-stage timeline makes the complete status visible in one place.
+
+
+KEY UX BENEFIT
+--------------
+
+FROM UNCERTAINTY → TO CLARITY
+
+The solution gives users a single, easy-to-understand view of their booking
+status, helping them quickly identify:
+
+- What has succeeded
+- What has failed
+- What is still pending
+- What ticket status they received
+- What seat status they received
+
+Ultimately, the timeline aims to give Tatkal users more clarity and control
+at the moment when uncertainty is highest.
