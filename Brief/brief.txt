@@ -278,3 +278,5 @@ status, helping them quickly identify:
 
 Ultimately, the timeline aims to give Tatkal users more clarity and control
 at the moment when uncertainty is highest.
+
+
